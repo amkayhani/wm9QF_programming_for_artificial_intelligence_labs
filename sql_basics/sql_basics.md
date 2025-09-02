@@ -1,7 +1,7 @@
 <!--
 module_id: sql_basics
-author: Peter Camacho; Joy Payton
-email: camachop@chop.edu; paytonk@chop.edu
+author: Peter Camacho; Joy Payton; David Croft
+email: camachop@chop.edu; paytonk@chop.edu; david.croft@warwick.ac.uk
 version: 1.3.2
 current_version_description: Add three new additional resources; make liascript link(s) point to first page
 module_type: standard
@@ -56,6 +56,7 @@ Previous versions:
 - [1.0.2](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/a4ea7a7f1f9264dabe952b68941fc9f0f656c9fc/sql_basics/sql_basics.md#1): Initial version.
 @end
 
+link:  ../assets/styles.css
 import: ../module_templates/macros.md
 import: ../module_templates/macros_sql.md
 -->
@@ -638,6 +639,22 @@ The fact that nulls aren't included in comparisons is a very subtle distinction 
 
 </div>
 
+<div class = "help">
+<b style="color: rgb(var(--color-highlight));">NULL is not "Null"</b><br>
+
+It is important that you understand that Null values are not the same as the string "Null".
+Null is an absence of a value, "Null" is a string with a very definite value of 4 characters, N, u, l and l.
+Understand that "Null" is a perfectly valid string value. 
+The failure of previous programmers to recognize this distinction has caused numerous issues; in particular for anyone unfortunate enough to have a "Null" as their name.
+
+[BBC News Article on "Jennifer Null"](https://www.bbc.co.uk/future/article/20160325-the-names-that-break-computer-systems)
+
+Within a single database or application this distinction is generally clear and is unlikely to cause issue. 
+But when importing or exporting data from a database, or writing software that has to transfer data between applications, this distinction can become lost and that causes problems.
+
+</div>
+
+
 Sometimes you want to evaluate missing data patterns.  For example, maybe there's a discernible pattern in patients who are missing sex or race data.  Write and run a query in the code box below that will give you all the fields for rows in `patients` where either the sex or race data is missing.   (Hint: there might not be any rows that have missing data in those two fields).
 
 ```sql
@@ -662,7 +679,8 @@ Try:
 SELECT * 
 FROM alasql.patients
 WHERE 
-	patients.sex IS NULL OR
+	patients.sex IS NULL 
+OR
 	patients.race IS NULL;
 ```
 
@@ -676,7 +694,8 @@ What has to change to make this code work?  Select all that apply.
 SELECT
 FROM alasql.patients
 WHERE
-  patients.race = NULL OR
+  patients.race = NULL 
+OR
   patients.sex = NULL.
 ```
 
@@ -861,11 +880,11 @@ Try:
 
 ```sql
 SELECT 
-	pt.id
-	,pt.sex as sex_assigned_at_birth
-	,pt.ethnicity
-	,pt.state
-	,pt.zip as postal_code
+	pt.id,
+	pt.sex as sex_assigned_at_birth,
+	pt.ethnicity,
+	pt.state,
+	pt.zip as postal_code
 FROM alasql.patients as pt
 ORDER BY postal_code;
 ```

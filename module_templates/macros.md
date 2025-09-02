@@ -19,6 +19,8 @@ Previous versions:
 
 @end
 
+
+
 @overview
 <div class = "overview">
 
@@ -148,8 +150,6 @@ Looking for other modules on this topic or other topics related to data analytic
 })(jQuery);
 </script>
 @end
-
-link:  ../assets/styles.css
 
 script: https://kit.fontawesome.com/83b2343bd4.js
 script:  https://code.jquery.com/jquery-3.6.0.slim.min.js

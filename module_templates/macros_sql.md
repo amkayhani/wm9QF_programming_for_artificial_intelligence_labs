@@ -26,8 +26,8 @@ However, in this lab session, we won't ask you to download a heavy-duty SQL clie
 
 ```sql
 SELECT
-  birthdate
-  ,sex
+  birthdate,
+  sex
 FROM patients
 LIMIT 10;
 ```

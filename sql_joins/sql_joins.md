@@ -99,11 +99,12 @@ Data from two SQL tables can be joined together, using the `JOIN` command.  This
 
 ```sql
 SELECT
-  disease.subject_id
-  ,disease.lung_cancer
-  ,smoking.smoking_pack_years
-FROM disease JOIN smoking
-ON disease.subject_id = smoking.subject_id;
+  disease.subject_id,
+  disease.lung_cancer,
+  smoking.smoking_pack_years
+FROM disease 
+JOIN smoking
+  ON disease.subject_id = smoking.subject_id;
 ```
 
 
