@@ -6,7 +6,7 @@ version: 0.0.1
 current_version_description: a
 module_type: standard
 language: en
-narrator: US English Male
+narrator: UK English Female
 mode: Textbook
 title: SQLite
 
@@ -17,15 +17,17 @@ long_description: a
 estimated_time_in_minutes: ?
 
 @pre_reqs
-Experience working with rectangular data (data in rows and columns) is required, as is some exposure to the idea of SQL and its use of tables with rows and columns.  No experience writing SQL code is expected or required for this module.  If you would like a code-free overview to SQL we recommend our module [Demystifying SQL](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/demystifying_sql/demystifying_sql.md#1).
+Familiarity with basic SQL concepts (such as tables, rows, and columns) and experience answering SQL-related questions is recommended. You should also have some experience with Python programming, including writing simple scripts and using libraries. No advanced SQL or Python knowledge is required.
 @end
 
 @learning_objectives  
-- Use SELECT, FROM, and WHERE to do a basic query on a SQL table
-- Use IS NULL and IS NOT NULL operators to work with empty values
-- Explain the use of DISTINCT and how it can be useful
-- Use AS and ORDER BY to change how query results appear
-- Explain why the LIMIT keyword can be useful
+- Understand how to connect to and interact with SQLite databases using Python
+- Explain the benefits of using the Python Database API Specification (PEP 249)
+- Demonstrate how to create tables, insert, update, and query data in SQLite from Python
+- Use context managers and transactions (`commit`, `rollback`) for safe database operations
+- Apply best practices for executing parameterized queries to prevent SQL injection
+- Compare different methods for retrieving query results (`fetchall`, `fetchmany`, `fetchone`)
+- Recognize common pitfalls when writing SQL queries in Python and how to avoid them
 @end
 
 good_first_module: false
@@ -42,16 +44,27 @@ Previous versions:
 @end
 
 import: ../module_templates/macros.md
-import: https://raw.githubusercontent.com/LiaTemplates/Pyodide/master/README.md
+import: https://dscroft.github.io/Pyodide/README.md
 mport: https://github.com/LiaScript/CodeRunner/blob/master/README.md
 
 
 @create_sqlite_db
-```python
-with open("sqlite.db", "w") as f:
-    f.write("Wibble")
+```python @Pyodide.exec
+import sqlite3, os
+
+filename = "sqlite.db"
+
+with sqlite3.connect(filename) as con:
+    con.execute("DROP TABLE IF EXISTS users;")
+    con.execute("CREATE TABLE users (id integer PRIMARY KEY AUTOINCREMENT, username text, password text, firstname text, lastname text, address text, city text, county text, postal text, phone text, email text);")
+    con.execute("INSERT INTO users VALUES (1000,'Trout393','steal3','Aleshia','Tomkiewicz','14 Taylor St','St. Stephens Ward','Kent','CT2 7PP','01835-703597','atomkiewicz@hotmail.com');")
+    con.execute("INSERT INTO users VALUES (1017,'Pigeon729','nose8','Evan','Zigomalas','5 Binney St','Abbey Ward','Buckinghamshire','HP11 2AX','01937-864715','evan.zigomalas@gmail.com');")
+    con.execute("INSERT INTO users VALUES (1034,'Aardwolf536','party9','France','Andrade','8 Moor Place','East Southbourne and Tuckton W','Bournemouth','BH6 3BE','01347-368222','france.andrade@hotmail.com');")
+    con.execute("INSERT INTO users VALUES (1051,'Stoat334','brown0','Ulysses','Mcwalters','505 Exeter Rd','Hawerby cum Beesby','Lincolnshire','DN36 5RP','01912-771311','ulysses@hotmail.com');")
+    con.execute("INSERT INTO users VALUES (1068,'Toucan875','ought3','Tyisha','Veness','5396 Forth Street','Greets Green and Lyng Ward','West Midlands','B70 9DT','01547-429341','tyisha.veness@hotmail.com');")
+
+f"Creating {filename} {"successful" if os.path.exists(filename) else "unsuccessful"}."
 ```
-@Pyodide.exec
 @end
 
 @style
@@ -96,7 +109,7 @@ with closing(sqlite3.connect(filename)) as con:
     con.execute("CREATE TABLE other_table (col1 text, col2 text);")
     con.executemany("INSERT INTO other_table VALUES (?, ?);", data)
 
-f"Creating {filename} {"successfull" if os.path.exists(filename) else "unsuccessful"}."
+f"Creating {filename} {"successful" if os.path.exists(filename) else "unsuccessful"}."
 ```
 @end
 
@@ -178,11 +191,70 @@ with closing(sqlite3.connect(filename)) as con:
     con.executemany("INSERT INTO users (username, password) VALUES (?, ?);", data)
     con.commit()
 
-f"Creating {filename} {"successfull" if os.path.exists(filename) else "unsuccessful"}."
+f"Creating {filename} {"successful" if os.path.exists(filename) else "unsuccessful"}."
 ```
 @end
 
+
+@basic_import
+<div style="display: none;">
+```python @Pyodide.exec
+import sqlite3
+from contextlib import closing
+```
+</div>
+@end
+
+link:  ../assets/styles.css
+import: ../module_templates/macros.md
+import: ../module_templates/macros_sql.md
+
 -->
+
+# Demo
+
+```python
+import sqlite3
+
+con = sqlite3.connect(":memory:")
+con.execute("CREATE TABLE demo (value TEXT UNIQUE);")
+
+try:
+  with con:
+    con.execute("INSERT INTO demo VALUES ('example1');")
+    con.execute("INSERT INTO demo VALUES ('example2');")
+    con.execute("INSERT INTO demo VALUES ('example1');")
+except sqlite3.IntegrityError as e:
+    print(f"Error while inserting: {e}")
+
+with con:
+    print("Table contents: ")
+    print(con.execute("SELECT * FROM demo;").fetchall())
+
+con.close()
+```
+@Pyodide.eval
+
+
+```python
+import sqlite3
+
+con = sqlite3.connect(":memory:")
+
+cur1 = con.cursor()
+cur2 = con.cursor()
+
+cur1.execute("CREATE TABLE demo (value TEXT);")
+cur1.execute("INSERT INTO demo VALUES ('example1');")
+cur1.execute("INSERT INTO demo VALUES ('example2');")
+cur1.execute("INSRT INTO demo VALUES ('example3');")
+
+print( cur2.execute("SELECT * FROM demo;").fetchall() )
+
+con.close()
+```
+@Pyodide.eval
+
 
 # SQL and Python
 
@@ -208,12 +280,13 @@ In summary, accessing databases from a programming language bridges the gap betw
 Python has significant benefits for database access over older languages such a Java, C or C++.
 In those languages you would typically need to use an external library to access the database and the functionality of said library would vary from database to database.
 
-In Python, Guido van Rossum, the creator of Python, has made it a priority to ensure that Python has a standard interface for database access. 
+In Python, Guido van Rossum (Python's benevolent dictator for life), has made it a priority to ensure that Python has a standard interface for database access. 
 This means that you can use the same code to access different databases, such as SQLite, MySQL, PostgreSQL, and others.
 This is done through the [Python Database API Specification](https://www.python.org/dev/peps/pep-0249/), which defines a standard interface for database access in Python. 
 PEP 249 means that you can use the same code to access different databases, and you can easily switch between databases without having to change your code.
 
 There may be additional functionality that is specific to a particular database, but the core functionality of connecting to a database, executing queries, and retrieving results is the same across all databases.
+This means that that the concepts you learn hear are directly applicable to any other database engine you may use in the future.
 
 
 ## SQLite
@@ -288,7 +361,7 @@ import sqlite3
 
 
 # open the database files
-con = sqlite3.connect('sqlite.db')
+con = sqlite3.connect('demo.db')
 cur = con.cursor()
 
 # execute a query
@@ -319,7 +392,7 @@ Therefore if you want to ensure that you are working with an existing database, 
 
 ### :memory: databases
 
-One piece of functionality posessed by SQLite that is not typical of other databases is the ability to create an in-memory database.
+One piece of functionality possessed by SQLite that is not typical of other databases is the ability to create an in-memory database.
 This means that the database is created in RAM and does not persist to disk.
 
 Scenarios where this might be useful include:
@@ -335,6 +408,13 @@ To create an in-memory database, you can use the special database name `:memory:
 con = sqlite3.connect(":memory:")
 ```
 
+<div class = "important">
+<b style="color: rgb(var(--color-highlight));">Important note</b><br>
+
+Remember, nothing is saved to disk when using an in-memory database. 
+When the connection is closed, the database and all of its contents are lost.
+
+</div>
 
 
 # Python Database API
@@ -348,18 +428,14 @@ In this section we will look at the main components of the Python Database API w
 A connection is an object that represents a connection to a database.
 In Python, you can create a connection object using the `connect()` method of the `sqlite3` module.
 
-If you need to connect to multiple databases you can create multiple connection objects, one for each database.
+If you need to connect to multiple databases, you can create multiple connection objects, one for each database.
 
 It is important to close the connection when you are done with it, as this will free up resources and ensure that any changes made to the database are saved.
-This is done using the `close()` method of the connection object when you are done with the database.
+This is done using the `close()` method of the connection object when you are done.
 
 ----------------------------
 
-A more pythonic way to handle connections is to use a `with` statement, which will automatically tidy up after a block of code, even if there has been an error.
-
-```python @Pyodide.exec
-import sqlite3
-```
+@basic_import
 
 **Explicit connection management**
 
@@ -372,42 +448,159 @@ con.close()
 ```
 @Pyodide.eval
 
-----------------------------
 
-**Context manager approach**
+
+## Commit and rollback
+
+When working with databases, it is important to ensure that changes made to the database are saved correctly.
+
+This is done using transactions, which are a way to group multiple changes together and ensure that they are either all saved or all discarded.
+
+This is useful when you are making multiple changes to the database and want to ensure that they are all saved correctly, or if you want to discard all changes if there is an error.
+
+For example, if a user is purchasing an item from an online store using store credit.
+Multiple changes need to be made to the data:
+
+- The user's store credit balance needs to be reduced by the amount of the purchase.
+- The item quantity needs to be decreased.
+- A new order record needs to be created.
+
+It is important that either all of the changes are successful or none of them are successful. 
+If any of the actions fail then the database should be rolled back to the state it was in before the transaction started.
+
+- `commit()` is used to save all changes made during the transaction.
+  - Will generally be used if all changes were successful.
+- `rollback()` is used to discard all changes made during the transaction.
+  - Will generally be used if there was an error and you want to discard all changes.
+
+<div class = "important">
+<b style="color: rgb(var(--color-highlight));">Important note</b><br>
+
+`commit()` and `rollback()` execute the `COMMIT` and `ROLLBACK` SQL commands respectively.
+There is nothing stopping you from running these using the `execute()` method of the connection or cursor object, but it is not very Pythonic.
+
+</div>
+
+---------------------
+
+Let's look at an example.
+In this example we are creating a table with a unique constraint on the `value` column and then trying to add three rows, two of which are identical and will therefore violate the unique constraint causing an error.
+
+@basic_import
+
+```python
+con = sqlite3.connect(":memory:")
+
+con.execute("CREATE TABLE demo (value TEXT UNIQUE);")
+
+try:
+    con.execute("INSERT INTO demo VALUES ('example1');")
+    con.execute("INSERT INTO demo VALUES ('example2');")
+    con.execute("INSERT INTO demo VALUES ('example1');")
+except sqlite3.IntegrityError as e:
+    print(f"Error while inserting: {e}")
+else:
+    print("Everything is fine")
+
+print(f"Rows in table:", con.execute("SELECT * FROM demo;").fetchall())
+
+con.close()
+```
+@Pyodide.eval
+
+As you can see, the error occurs when we try to insert the second 'example1' row, but the first two rows are still in the table leaving our data partially inserted.
+
+Try and modify the code to ensure that either all the rows are inserted or none of them are.
+
+<details>
+<summary>**Still stuck?  Click to see our solution!**</summary>
+
+<br/>
+
+<div class = "answer">
+
+Here's the code we used:
+
+```python
+con = sqlite3.connect(":memory:")
+
+con.execute("CREATE TABLE demo (value TEXT UNIQUE);")
+
+try:
+    con.execute("INSERT INTO demo VALUES ('example1');")
+    con.execute("INSERT INTO demo VALUES ('example2');")
+    con.execute("INSERT INTO demo VALUES ('example1');")
+except sqlite3.IntegrityError as e:
+    print(f"Error while inserting: {e}")
+    con.rollback()
+else:
+    print("Everything is fine")
+    con.commit()
+
+print(f"Rows in table:", con.execute("SELECT * FROM demo;").fetchall())
+
+con.close()
+```
+@Pyodide.eval
+
+</div>
+
+</details>
+
+
+### Context manager approach
+
+All of this does add a fair amount of boilerplate code that has to be included repeatedly, but we can simplify this.
+
+Instead of calling `commit()` and `rollback()` explicitly, we can use a `with` statement to handle this for us.
+
+@basic_import
+
+```python
+con = sqlite3.connect(":memory:")
+
+con.execute("CREATE TABLE demo (value TEXT UNIQUE);")
+try:
+    with con:
+        con.execute("INSERT INTO demo VALUES ('example1');")
+        con.execute("INSERT INTO demo VALUES ('example2');")
+        con.execute("INSERT INTO demo VALUES ('example1');")
+except sqlite3.Error as e:
+    print(f"Error while inserting: {e}")
+
+print(f"Rows in table:", con.execute("SELECT * FROM demo;").fetchall())
+```
+@Pyodide.eval
+
+-------------------------------------
+
+We can also use a context manager to handle the connection itself but this is slightly more complex.
+
+We need to explicitly tell python to call the `.close()` method of the connection object instead of just tidying up the transaction with `commit()` or `rollback()` as we have seen previously.
+
 
 ```python
 from contextlib import closing
 
 with closing(sqlite3.connect(":memory:")) as con:
-    cur = con.cursor()
-    cur.execute("SELECT sqlite_version();")
-    print(cur.fetchall())
+    con.execute("SELECT sqlite_version();")
+
+try:
+    con.execute("SELECT sqlite_version();")
+except sqlite3.Error as e:
+    print(f"Error: {e}")
 ```
 @Pyodide.eval
 
--------------------
-
-We have to use the `closing` context manager here because without it the default context manager behaviour of the `with` statement clean up the query, not end the entire connection.
-By which we mean that the default behavior is to either `commit` or `rollback` the current SQL transation at the end of the `with` block, but not close the connection itself.
-
-This means that the connection will remain open until the program ends, which can be desirable in some cases.
-
-```python
-with sqlite3.connect(":memory:") as con:
-    cur = con.cursor()
-    print(cur.execute("SELECT sqlite_version()").fetchall())
-    # con.close() is not called here, so the connection remains open
-print(cur.execute("SELECT sqlite_version()").fetchall())
-con.close()
-```
-@Pyodide.eval
 
 
 
 ## Cursors
 
-Cursors are used to interact with the database and execute SQL queries. In Python, you can create a cursor object using the `cursor()` method of the connection object.
+Using the connection object directly to execute queries is fine for simple queries, but for more complex queries it is better to use a cursor.
+In Python, you can create a cursor object using the `cursor()` method of the connection object.
+
+@basic_import
 
 ```python
 con = sqlite3.connect("sqlite.db")
@@ -417,34 +610,43 @@ cur.execute("SELECT * FROM table_name;")
 rows = cur.fetchall()
 ```
 
-Once you have a cursor, you can use it to execute SQL queries and fetch results.
-Creating a cursor object is not strictly necessary in Python, as you can execute queries directly on the connection object, but it is a good practice to use a cursor as it allows you to manage the state of the query and results more easily.
+Cursors allow us to have more finely grained control over the interaction with the database and execution of queries. 
+In particular, creating multiple cursors also allows you to execute multiple queries and read multiple sets of results in parallel, as each cursor maintains its own state and results.
 
-Creating a cursor also allows you to execute multiple queries in parallel, as each cursor maintains its own state and results.
+@create_product_db(cursor_example.db)
 
 ```python
-con = sqlite3.connect("sqlite.db")
-cur1 = con.cursor()
-cur2 = con.cursor()
+with closing(sqlite3.connect("cursor_example.db")) as con:
+    cur1 = con.cursor()
+    cur2 = con.cursor()
 
-cur1.execute("SELECT * FROM table_name_1;")
-cur2.execute("SELECT * FROM table_name_2;")
+    cur1.execute("SELECT * FROM users;")
+    cur2.execute("SELECT * FROM products;")
 
-rows1 = cur1.fetchall()
-rows2 = cur2.fetchall()
+    for i in range(3):
+        print(f"Cursor 1, Row {i}: {cur1.fetchone()}")
+        print(f"Cursor 2, Row {i}: {cur2.fetchone()}")
 ```
+@Pyodide.eval
+
+
+
 
 ## Query gotchas
 
-When writing SQL queries in Python, there are a few common gotchas that you should be aware of. These can lead to errors or unexpected behavior if not handled correctly.
+When writing SQL queries in Python, there are a few common gotchas that you should be aware of.
+These predominantly relate to how strings are handled in Python and SQL, and can lead to errors or unexpected behavior if not handled correctly or if you are not aware of them.
+
+
 
 ### " and '
 
 When writing SQL queries in Python, you will need to be careful about how you use quotes.
 In SQL, you can use either single quotes (`'`) or double quotes (`"`) to define string literals.
-However, in Python, you also can also use single and double quotes to define string literals.
+In Python, you also can also use single and double quotes to define string literals.
 
-The problem occurs when you are defining a string literal in python containing a SQL query, and that query contains also string literals.
+The problem occurs when you are defining a string literal in Python containing a SQL query, and that query also contains string literals.
+You can end up with a situation where the quotes in the SQL query conflict with the quotes in the Python string.
 
 For example:
 
@@ -472,9 +674,14 @@ query = 'SELECT * FROM products WHERE product_type = "FRUIT";'
 
 You can escape the quotes in the SQL query using a backslash (`\`).
 This works for both single and double quotes.
+This can affect readability of the query, but it is worth mentioning that if you are writing a SQL query that contains \ (backslashes) you will need to escape those.
 
 ```python
+# escaping quotes in a Python string
 query = "SELECT * FROM products WHERE product_type = \"FRUIT\";"
+
+# escaping backslashes in a Python string, searching for C:\Users\
+query = "SELECT * FROM files WHERE file_path LIKE \"C:\\Users\\%\";"
 ```
 
 -----------------------
@@ -483,8 +690,12 @@ query = "SELECT * FROM products WHERE product_type = \"FRUIT\";"
 
 You can use triple quotes to define a multi-line string in Python, which allows you to use both single and double quotes without escaping them.
 
+Triple quotes can be either `'''` or `"""`.
+
 ```python
 query = """SELECT * FROM products WHERE product_type = "FRUIT";"""
+
+query = '''SELECT * FROM products WHERE product_type = 'FRUIT';'''
 ```
 
 
@@ -492,9 +703,11 @@ query = """SELECT * FROM products WHERE product_type = "FRUIT";"""
 
 When working with SQL queries, it is often useful to be able to write multiline queries for readability and maintainability.
 
+For example it is better to write:
+
 <section class="flex-container">
 <div class="flex-child" style="min-width: 300px;">
-**This:**
+This:
 
 ```sql
 SELECT
@@ -507,7 +720,7 @@ WHERE product_type = "FRUIT";
 ```
 </div>
 <div class="flex-child" style="min-width: 300px;">
-**Not this:**
+Not this:
 
 ```sql
 select price, best_by_date, sale_pct, quantity from products where product_type = "FRUIT";
@@ -540,8 +753,10 @@ When writing SQL queries in Python, especially if you are writing queries that r
 Using string concatenation to build SQL queries is a terrible idea, as it leaves your code open to SQL injection attacks.
 This concept will be explored in more detail in the [SQL Injection](https://liascript.github.io/course/?https://dscroft.github.io/liascript_sqli/lia.md) activity.
 
+This is not a Python-specific or SQL-specific issues, it is a general issue with any programming language that allows you to create code to run on the host machine using string concatenation.
+
 There are a *very* small number of cases where string concatenation could be acceptable, such as when you are writing a query that does not rely directly on user input. 
-But for the most part string concatenation for SQL query creation should be viewed as an actively dangerous anti-pattern and is to be avoided.
+But for the most part string concatenation for SQL query creation or *any* code that will be executed on the host machine should be viewed as an actively dangerous anti-pattern and is to be avoided.
 
 ----------------------
 
@@ -573,8 +788,10 @@ cur.execute(query)
 **Never, *ever*, under *any* circumstances, this:**
 
 ```python
+# getting user input
 search_term = input("Enter a search term: ")
 
+# using user input directly in a query
 query = "SELECT * FROM products WHERE product_type = '" + search_term + "';"
 cur.execute(query)
 ```
@@ -714,75 +931,11 @@ for row in cur:
 </div>
 </section>
 
-
-
-## Transactions
-
-A transaction is used to ensure that a series table change changes are executed as a single unit of work, and that either all of the statements are executed successfully or none of them.
-This is important for maintaining the integrity of the database, as it ensures that the database is always in a consistent state.
-
-For example, if a user is purchasing an item from an online store using store credit.
-Multiple changes need to be made to the data:
-
-- The user's store credit balance needs to be reduced by the amount of the purchase.
-- The item quantity needs to be decreased.
-- A new order record needs to be created.
-
-It is important that either all of the changes are successful or none of them are successful. 
-If any of the actions fail then the database should be rolled back to the state it was in before the transaction started.
-
--------------------
-
-To do this in SQL this is achieved using the `COMMIT` and `ROLLBACK` statements.
-In the Pyhon DB API, you can use the `commit()` and `rollback()` methods of the connection object.
-
-Calling `commit()` on a connection object will save all of the changes made since the last commit or rollback.
-Calling `rollback()` will undo all of the changes since the last commit or rollback.
-
-Just as forgetting to close a connection can lead to issues, forgetting to call `commit()` after making changes to the database can result in lost or unsaved data. To avoid this, it is recommended to use a context manager for transaction handling. With a context manager, `commit()` is automatically called when the block completes successfully, ensuring your changes are properly managed.
-
-
-**Explicit management**
-
-```python
-con = sqlite3.connect(filename)
-con.execute(query1)
-con.execute(query2)
-con.execute(query3)
-con.commit()  # Commit the transaction
-con.close()   # Close the connection
-```
-
--------------------
-
-**Context management**
-
-```python
-with closing(sqlite3.connect(filename)) as con:
-    with con:
-        con.execute(query1)
-        con.execute(query2)
-        con.execute(query3)
-
-# or
-
-with closing(sqlite3.connect(filename)) as con, con:
-    con.execute(query1)
-    con.execute(query2)
-    con.execute(query3)
-```
+The appropriate method to use will depend on the specific use case and the size of the dataset being queried.
 
 
 
-
-When you have a series of changes to make, 
-When you are confident that all of your changes have been made successfully, you can call 
-This can be done explicitly or, as we have seen with connections, using a context manager.
-
-
-
-
-## Example 
+# Demonstration
 
 If we put all of this together, we can see the significant difference that it makes to our code.
 
@@ -790,7 +943,7 @@ If we put all of this together, we can see the significant difference that it ma
 **Not recommended**
 
 ```python
-con = sqlite3.connect("sqlite.db")
+con = sqlite3.connect("store.db")
 
 orders = [(1, 1), (2, 2), (3, 3)]
 
@@ -809,106 +962,129 @@ con.close()
 ```python
 orders = [(1, 2), (2, 3), (3, 1)]
 
-with closing(sqlite3.connect("sqlite.db")) as con, con:
-    con.executemany("""UPDATE products 
-                       SET quantity = quantity -1 
-                       WHERE id = ?;""", 
-                       ((product,) for _, product in orders))
-    
-    con.executemany("""INSERT INTO orders (user_id, product_id) 
-                       VALUES (?, ?);""", 
-                       orders)
-    
-    con.executemany("""UPDATE users 
-                       SET credit = credit - (SELECT price 
-                                              FROM products 
-                                              WHERE id = ?) 
-                       WHERE id = ?;""", 
-                       ((product, user) for user, product in orders))
+try:
+    with closing(sqlite3.connect("store.db")) as con, con:
+        con.executemany("""UPDATE products 
+                        SET quantity = quantity -1 
+                        WHERE id = ?;""", 
+                        ((product,) for _, product in orders))
+        
+        con.executemany("""INSERT INTO orders (user_id, product_id) 
+                        VALUES (?, ?);""", 
+                        orders)
+        
+        con.executemany("""UPDATE users 
+                        SET credit = credit - (SELECT price 
+                                                FROM products 
+                                                WHERE id = ?) 
+                        WHERE id = ?;""", 
+                        ((product, user) for user, product in orders))
+except sqlite3.Error as e:
+    print(f"Error processing orders: {e}")
+
 ```
 
----------------
 
-In the initial example we are using string concatenation to build the SQL queries, this is very poor practise.
-It also negatively impacts the readability of the SQL statement, although since it's all on one line it's not particularly readable to begin with.
+Why is the second example better? 
 
-We are also not using a context manager to handle the connection, we have remembered to call `commit()` and `close()` this time but they might be forgotten if every the code is changed or refactored.
+<details>
+<summary>**If you are still stuck, click to see our answer!**</summary>
 
-Using a for loop to process each order is less clear cut, using `executemany()` in the second example is more efficient but in this case it has made it more difficult to pass the appropriate values to the SQL queries.
-The for loop from the first example is probably more readable than the multiple generator expressions used in the second example but this could be a situation where the performance benefits outweight the readability concerns, it would depend on the number of orders being processed.
+<br/>
 
+<div class = "answer">
+These are the improvements that we have made, are there any additional improvements that you would make?
 
+1. No string concatenation
 
+   - In the initial example we are using string concatenation to build the SQL queries, this is very poor practise. 
+   - It also negatively impacts the readability of the SQL statement, although since it's all on one line it's not particularly readable to begin with.
 
-## Demo 
+2. Context management
+   
+   - We are also not using a context manager to handle the connection, we have remembered to call `commit()` and `close()` this time but they might be forgotten if every the code is changed or refactored.
 
-Use SQLite in Pyodide with generated database files.
+3. Performance
 
+   - Using a for loop to process each order is less clear cut, using `executemany()` in the second example is more efficient but in this case it has made it more difficult to pass the appropriate values to the SQL queries.
+   - The for loop from the first example is probably more readable than the multiple generator expressions used in the second example but this could be a situation where the performance benefits outweigh the readability concerns, it would depend on the number of orders being processed.
 
-``` python   @Pyodide.exec
-import sqlite3, os
+</div>
 
-filename = "sqlite.db"
-
-with sqlite3.connect(filename) as con:
-    con.execute("DROP TABLE IF EXISTS users;")
-    con.execute("CREATE TABLE users (id integer PRIMARY KEY AUTOINCREMENT, username text, password text, firstname text, lastname text, address text, city text, county text, postal text, phone text, email text);")
-    con.execute("INSERT INTO users VALUES (1000,'Trout393','steal3','Aleshia','Tomkiewicz','14 Taylor St','St. Stephens Ward','Kent','CT2 7PP','01835-703597','atomkiewicz@hotmail.com');")
-    con.execute("INSERT INTO users VALUES (1017,'Pigeon729','nose8','Evan','Zigomalas','5 Binney St','Abbey Ward','Buckinghamshire','HP11 2AX','01937-864715','evan.zigomalas@gmail.com');")
-    con.execute("INSERT INTO users VALUES (1034,'Aardwolf536','party9','France','Andrade','8 Moor Place','East Southbourne and Tuckton W','Bournemouth','BH6 3BE','01347-368222','france.andrade@hotmail.com');")
-    con.execute("INSERT INTO users VALUES (1051,'Stoat334','brown0','Ulysses','Mcwalters','505 Exeter Rd','Hawerby cum Beesby','Lincolnshire','DN36 5RP','01912-771311','ulysses@hotmail.com');")
-    con.execute("INSERT INTO users VALUES (1068,'Toucan875','ought3','Tyisha','Veness','5396 Forth Street','Greets Green and Lyng Ward','West Midlands','B70 9DT','01547-429341','tyisha.veness@hotmail.com');")
-
-f"Creating {filename} {"successfull" if os.path.exists(filename) else "unsuccessful"}."
-```
-
-``` python
-import sqlite3
-
-sqlite3.connect(":memory:").execute("select sqlite_version()").fetchall()
-
-a = 42
-```
-@Pyodide.eval
-
-## aaa
-
-``` python
-print( a )
-```
-@Pyodide.eval
+</details>
 
 
+## Quiz: Best Practices
 
+Question 1
+==========
 
-``` python
-import sqlite3
+Which of the following statements about `executemany()` in Python's `sqlite3` module is correct?
 
-with sqlite3.connect("sqlite.db") as con:
-    cur = con.cursor()
-    cur.execute("SELECT * FROM users;")
-    while row:=cur.fetchone():
-        print(row)
-```
-@Pyodide.eval
+[( )] `executemany()` can only be used for SELECT queries.
+[(X)] `executemany()` efficiently executes the same SQL statement multiple times with different parameters.
+[( )] `executemany()` automatically commits changes after each execution.
+[( )] `executemany()` is less efficient than running a loop with `execute()`.
 
-
-# Questions
-
-### Quiz: Anti-patterns
-
-What is considered an anti-pattern when writing SQL queries that rely on user input?
-
-[( )] Writing queries on multiple lines.
-[(X)] String concatenation.
-[( )] Using `.fetchone()` to retrieve results.
-[( )] Using context managers, i.e. `with` to manage connections.
 ****
 
 <div class = "answer">
 
-String concatenation is considered an anti-pattern when writing SQL queries, especially for those that rely on user input because it leaves your code open to SQL injection attacks. 
-Instead, you should use parameterized queries to safely pass user input to your SQL queries.
+`executemany()` is used to efficiently execute the same SQL statement multiple times with different sets of parameters. This is especially useful for bulk inserts or updates, as it reduces the overhead compared to running a loop with individual `execute()` calls.
 
 </div>
 ****
+
+
+
+Question 2
+==========
+
+Which of the following is the best practice for managing SQLite database connections in Python?
+
+[( )] Always use `connect()` and manually call `close()` at the end of your script.
+[(X)] Use a context manager with `with` statement to automatically handle connection cleanup.
+[( )] Keep the connection open for the entire duration of your program.
+[( )] Use `connect()` and rely on Python's garbage collector to close the connection.
+****
+
+<div class = "answer">
+
+Using a context manager with the `with` statement is the best practice for managing SQLite database connections. This ensures that the connection is properly closed even if an exception occurs, preventing resource leaks and potential database corruption. The context manager automatically handles both committing transactions and closing the connection when exiting the `with` block.
+
+</div>
+****
+
+
+
+Question 3
+==========
+
+Consider the following code snippet that inserts user data into a SQLite database:
+
+```python
+user_id = 123
+username = "alice"
+email = "alice@example.com"
+
+# Which approach is correct?
+```
+
+Which of the following is the correct and secure way to insert this data?
+
+[( )] `cursor.execute(f"INSERT INTO users VALUES ({user_id}, '{username}', '{email}')")`
+[( )] `cursor.execute("INSERT INTO users VALUES (" + str(user_id) + ", '" + username + "', '" + email + "')")`
+[(X)] `cursor.execute("INSERT INTO users VALUES (?, ?, ?)", (user_id, username, email))`
+[( )] `cursor.execute("INSERT INTO users VALUES (%s, %s, %s)", (user_id, username, email))`
+****
+
+<div class = "answer">
+
+The correct approach is using parameterized queries with `?` placeholders: `cursor.execute("INSERT INTO users VALUES (?, ?, ?)", (user_id, username, email))`. This method prevents SQL injection attacks by properly escaping the parameters and is the standard way to use placeholders in SQLite with Python's `sqlite3` module. The other options use string formatting or concatenation which are vulnerable to SQL injection, or use `%s` placeholders which are used in other database libraries like `psycopg2` but not in SQLite's `sqlite3` module.
+
+</div>
+****
+
+## Recap
+
+@recap

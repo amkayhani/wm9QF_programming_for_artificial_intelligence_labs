@@ -31,25 +31,13 @@ Previous versions:
 
 **Estimated time to completion:** @estimated_time_in_minutes minutes
 
-**Pre-requisites**
-
-@pre_reqs
-
 **Learning Objectives**
 
 After completion of this module, learners will be able to:
 
 @learning_objectives
 
-**Version History**
-
-This version (@version): @current_version_description
-
-@version_history
-
 </div>
-
-Looking for other modules on this topic or other topics related to data analytics and data science in biomedicine?  Please see [our complete list of educational modules](https://arcus.github.io/education_modules/list_of_modules) or consider trying our [prototype curriculum builder](https://learn.arcus.chop.edu).
 
 @end
 
@@ -79,7 +67,8 @@ Credit for the original versions and origin of these materials is given to the [
 
 @end
 
-@feedback
+@recap
+
 In the beginning, we stated some goals.
 
 **Learning Objectives:**
@@ -87,16 +76,6 @@ In the beginning, we stated some goals.
 After completion of this module, learners will be able to:
 
 @learning_objectives
-
-We ask you to fill out a brief (5 minutes or less) survey to let us know:
-
-* If we achieved the learning objectives
-* If the module difficulty was appropriate
-* If we gave you the experience you expected
-
-We gather this information in order to iteratively improve our work.  Thank you in advance for filling out @make_survey_url('@title', '@version', '@module_type', '@module_id')!
-
-Looking for other modules on this topic or other topics related to data analytics and data science in biomedicine?  Please see [our complete list of educational modules](https://arcus.github.io/education_modules/list_of_modules) or consider trying our [prototype curriculum builder](https://learn.arcus.chop.edu).
 
 @end
 
@@ -148,6 +127,38 @@ Looking for other modules on this topic or other topics related to data analytic
 	});
 
 })(jQuery);
+</script>
+@end
+
+@sectiontoc
+<script run-once>
+    let current = document.getElementById("focusedToc");
+    let elements = document.querySelectorAll('.lia-toc__link');
+    let section = [];
+    let contains = false;
+
+    for (let element of elements) 
+    {
+        // reset the list of sections
+        if (element.classList.contains('lia-toc__link--is-lvl-1'))
+        {
+            // but if this was the section that contains the current element, we are done
+            if (contains) break;
+            section = [];
+        }
+        else if (element.classList.contains('lia-toc__link--is-lvl-2'))
+            section.push( [ 0, element ] );
+        else if (element.classList.contains('lia-toc__link--is-lvl-3'))
+            section.push( [ 1, element ] );
+
+        if ( element === current )
+            contains = true;
+    }
+
+    let md = "LIASCRIPT: \n";
+    for (let [lvl, element] of section)
+        md += "  ".repeat(lvl) + "- [" + element.textContent + "](" + element.getAttribute('href') + ")\n\n";
+    md
 </script>
 @end
 

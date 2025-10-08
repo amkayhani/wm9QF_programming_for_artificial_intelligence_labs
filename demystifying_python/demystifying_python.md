@@ -42,6 +42,27 @@ coding_language: python
 - demystifying_command_line
 @end
 
+@style
+.flex-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows the items to wrap as needed */
+    align-items: stretch;
+    gap: 20px; /* Adds both horizontal and vertical spacing between items */
+}
+
+.flex-child { 
+    flex: 1;
+    margin-right: 20px; /* Adds space between the columns */
+}
+
+@media (max-width: 600px) {
+    .flex-child {
+        flex: 100%; /* Makes the child divs take up the full width on slim devices */
+        margin-right: 0; /* Removes the right margin */
+    }
+}
+@end
+
 @version_history 
 
 Previous versions: 
@@ -80,17 +101,49 @@ So why should you consider Python for your data analysis? There are a few reason
 
 ### Python versions
 
-Python is currently in version 3 (often referred to as Python 3 or Python 3.x). 
+Python comes in multiple versions, at time of writing (Sep 2025) the latest was 3.13.7.
 
+While there are similarities between versions, there are also some differences that can cause code written in one version to not work in the other.
+
+- If you are going forwards in minor versions, i.e. code written for 3.1 should work in 3.13.
+  - But code written in 3.13 may not work in 3.1.
+
+However this is not true for major versions.
+
+- I.e. Python 2 to Python 3.
+  - There are major breaking changes between 2 and 3 which mean that rarely possible to run Python 2 code in Python 3 without modification.
 - Python 2 reached End Of Life (EOL) in January 2020, meaning that it is no longer supported or updated. 
-- Ideally this should mean that Python 2 is no longer used, but that's not how legacy code works in practice.
-- If you are downloading Python for the first time, you should be downloading Python 3. 
-- If you are working with someone else's code, you may want to check which version of Python they used to write their code. 
+  - Ideally this should mean that Python 2 is no longer used, but that's not how legacy code works in practice.
 
-While there are some similarities between the two versions, there are also some important differences that can cause code written in one version to not work in the other.
+This module will focus entirely on Python 3.
 
-- This module will focus entirely on Python 3.
+- You should not be writing new code in Python 2.
 
+---------------------------
+
+<section class="flex-container">
+<div class="flex-child" style="min-width: 300px;">
+**Python 2**
+
+```python
+print "Hello World!", 10 / 3
+```
+
+`Hello World! 3`
+
+</div>
+
+<div class="flex-child" style="min-width: 300px;">
+**Python 3**
+
+```python
+print("Hello World!", 10 / 3)
+```
+
+`Hello World! 3.3333333333333335`
+
+</div>
+</section>
 
 
 ### Quiz: The Python Programming Language

@@ -125,7 +125,7 @@ h2, h3, h4 {
 }
 
 .lia-header__middle {
-  background: url(https://raw.githubusercontent.com/dscroft/wm9QF_programming_for_artificial_intelligence_labs/refs/heads/main/assets/media/wmg-logo.svg);
+  background: url(https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/assets/media/wmg-logo.svg);
   background-repeat: no-repeat;
 }
 
@@ -176,3 +176,4 @@ table.tight-table td
  {
     min-width: unset !important;
 }
+

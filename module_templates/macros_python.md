@@ -16,7 +16,7 @@ Previous versions:
 - [1.0.0](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/e983922162e6fbf971c03dc96052f68713cc72af/_module_templates/macros_python.md#1): Initial version
 @end
 
-import: https://raw.githubusercontent.com/LiaTemplates/Pyodide/master/README.md
+import: https://dscroft.github.io/Pyodide/README.md
 
 @lesson_prep_python_pyodide
 You will have opportunities for hands-on coding as you work your way through this module using interactive python cells.
@@ -65,6 +65,35 @@ Variables will persist from one page to the next as you navigate this module usi
 If you reload the webpage, however, all of the cells will reset to their original state and you may need to navigate to an earlier page to re-define some variables.
 
 </div>
+
+At times, you may encounter test sections designed to automatically verify that your code is functioning correctly.
+
+These will require you to run your code block before the test block in order for the test to work correctly.
+
+**Activity:**
+
+```python
+# Define a variable x with value 10
+```
+@Pyodide.eval
+
+**Test section: does your code work?**
+
+```python
+# Test that x has value 10
+try:
+    x
+except NameError:
+    print("Test failed, variable x is not defined.")
+else:
+    if x == 10:
+        print("Test passed!")
+    else:
+        print("Test failed: x is not 10.")
+```
+@Pyodide.hide
+
+-----------
 
 @end
 

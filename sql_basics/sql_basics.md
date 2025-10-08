@@ -61,14 +61,17 @@ import: ../module_templates/macros.md
 import: ../module_templates/macros_sql.md
 -->
 
-# Attribution
+
+
+# SQL Basics
+
+@overview
+
+## Attribution
 
 @attribution
 
-# SQL Basics
-@overview
-
-## SQL: A Brief Refresher
+## SQL: A Brief Introduction
 
 **SQL** (**S**tructured **Q**uery **L**anguage) is a language that for more than four decades has been used to interact with **relational databases**.  You can pronounce it as "sequel" or just say the letters S-Q-L.
 
@@ -87,7 +90,6 @@ This is in contrast to imperative programming languages like Python or JavaScrip
 
 SQL is great at working with rectangular data, data that is stored in tables with rows and columns / fields.  Its powerful SELECT - FROM - WHERE syntax makes SQL an ideal tool for isolating just the data you care about, whether that's specifying the columns you're interested in or limiting your data to just those rows that meet certain conditions.  However, it's not great for fine-tuned statistical, linguistic, or data visualization purposes.  SQL is therefore a tool that is often partnered with other tools like R or Python, which are better suited for work like statistical analysis.
 
-If you want to review SQL at a high level, consider our [Demystifying SQL](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/demystifying_sql/demystifying_sql.md#1) module.
 
 ## Lesson Preparation
 @lesson_prep_sql
@@ -467,6 +469,8 @@ FROM alasql.patients;
 
 </div>
 
+## SQL Clauses
+
 ### WHERE
 
 The **WHERE clause**, using the `WHERE` keyword, is the section of your query used to specify any "filtering logic" that should be applied to your query before returning any output.  It's optional but very useful.
@@ -744,7 +748,7 @@ While you **could** omit `alasql`, it certainly isn't hurting things, and it's o
 
 **************
 
-
+## More SQL Clauses
 
 ### ORDER BY Statement
 

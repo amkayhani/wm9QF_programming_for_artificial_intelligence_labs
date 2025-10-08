@@ -29,6 +29,7 @@ Some experience writing basic SQL code (SELECT, FROM, WHERE) is expected in this
 - Find text that matches a given pattern using `LIKE` statements
 - Use `GROUP BY` and `HAVING` statements along with aggregate functions to understand group characteristics
 - Use `WITH` to create sub queries
+- Combine data from multiple queries using `UNION` and `UNION ALL`
 
 @end
 
@@ -65,17 +66,19 @@ previous_sequential_module: sql_basics
 
 @end
 
+link:  ../assets/styles.css
 import: ../module_templates/macros.md
 import: ../module_templates/macros_sql.md
 -->
 
-# Attribution
-
-@attribution
-
 # SQL, Intermediate Level
 
 @overview
+
+## Attribution
+
+@attribution
+
 
 ## SQL: A Brief Refresher
 
@@ -102,8 +105,8 @@ However, in our module, we won't ask you to download a heavy-duty SQL client.  R
 
 ```sql
 SELECT
-  birthdate
-  ,sex
+  birthdate,
+  sex
 FROM patients
 LIMIT 10;
 ```
@@ -135,8 +138,6 @@ Whether you adopt our preferred style or not, it's a good idea to have some sort
 3) **Use indentation to clarify the various sections of your query.**  Indenting the list of columns below a SELECT statement is a way of subordinating those lines to the SELECT, subtly indicating that those lines are a continuation of the SELECT statement.  A new line that isn't indented (say, a FROM statement) shows that the SELECT part of the query is over.
 
 4) **Use "dot notation"**, which we'll talk about in the next section.  Dot notation means adding more information about your data, for example, by including the table name the column comes from.  This practice will prepare you for using multiple data sources in your queries.
-
-5) **Use a comma-first style.**  This one can be a little jarring at first, but it does have real advantages, especially if you end up doing SQL for more than a few hours a week.  In a list of length n, don't put the comma **after** items 1 through n-1.  Rather, put the comma **before** items 2 through n.  
 
 
 ## CASE Statement
@@ -176,18 +177,18 @@ The example below looks at "Peanut IgE Ab in Serum" observations (i.e. labs) and
 
 ```sql
 SELECT
-	observations.*
-	,CASE
+  observations.*,
+  CASE
         WHEN observations.observation_value >= 17.5 THEN 'Strongly Positive'
         WHEN observations.observation_value >= .7 THEN 'Positive'
         WHEN observations.observation_value >= 0.35 THEN 'Equivocal'
         WHEN observations.observation_value >= 0.10 THEN 'Borderline'
         WHEN observations.observation_value < 0.10 THEN 'Negative'
         ELSE NULL
-	END AS interpretation
+  END AS interpretation
 FROM alasql.observations
 WHERE
-	observations.description = 'Peanut IgE Ab in Serum';
+  observations.description = 'Peanut IgE Ab in Serum';
 ```
 @AlaSQL.eval("#dataTable4a")
 
@@ -249,16 +250,8 @@ The `LIKE` operator can get you pretty far, but for more complicated queries, yo
 
 Each flavor of SQL will have its own operator for matching regular expressions. For example Oracle uses `REGEXP_LIKE` while MySQL uses `REGEXP`.
 
-To learn more about regular expressions, we suggest some modules we created, that go from very simple (what exactly **are** regular expressions?) to quite advanced!
-
-<!-- data-type="none" -->
-| Title  | Description  | Duration  |
-| :--------- | :--------- | :--------- |
-| [Demystifying Regular Expressions](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/demystifying_regular_expressions/demystifying_regular_expressions.md#1)| Learn about pattern matching using regular expressions, or regex. | 30 min |
-| [Regular Expressions Basics](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/regular_expressions_basics/regular_expressions_basics.md#1)| Begin to use regular expressions, or regex, for simple pattern matching.| 60 min|
-| [Regular Expressions: Groups](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/regular_expressions_groups/regular_expressions_groups.md#1) | Use regular expressions, or regex, for complex pattern matching involving capturing and non-capturing groups. | 30 min|
-| [Regular Expressions: Flags, Anchors, and Boundaries](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/regular_expressions_boundaries_anchors/regular_expressions_boundaries_anchors.md#1)| Use flags, anchors, and boundaries in regular expressions, or regex, for complex pattern matching. | 45 min|
-| [Regular Expressions: Lookaheads](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/regular_expressions_lookaheads/regular_expressions_lookaheads.md#1)| Use regular expressions, or regex, for complex pattern matching involving lookaheads. | 30 min|
+Regular expressions are a valuable skill to have and are usable in many programming languages, not just SQL.
+They are however a complex topic that is beyond the scope of this module.
 
 
 ## Quiz: CASE and LIKE
@@ -269,10 +262,10 @@ You're studying attitudes about smoking and will issue a survey in phases.  Phas
 
 ```sql
 SELECT
-  patients.first
-  ,patients.last
-  ,patients.county
-  ,CASE
+  patients.first,
+  patients.last,
+  patients.county,
+  CASE
     WHEN      THEN "Phase 1"
     WHEN      THEN "Phase 2"
     WHEN      THEN "Phase 3"
@@ -304,10 +297,10 @@ This is the query we used to get the answer:
 
 ```sql
 SELECT
-  patients.first
-  ,patients.last
-  ,patients.county
-  ,CASE
+  patients.first,
+  patients.last,
+  patients.county,
+  CASE
     WHEN patients.county = "Plymouth County" THEN "Phase 1"
     WHEN patients.county = "Essex County" THEN "Phase 2"
     WHEN patients.county = "Barnstable County" THEN "Phase 3"
@@ -329,9 +322,9 @@ Use a `LIKE` statement to enrich the query below and find the group of patients 
 
 ```sql
 SELECT
-  patients.id
-  ,patients.birthplace
-  ,patients.city
+  patients.id,
+  patients.birthplace,
+  patients.city
 FROM alasql.patients
 WHERE ...
 ORDER BY city;
@@ -355,9 +348,9 @@ This is the query we used to get the answer:
 
 ```
 SELECT
-  patients.id
-  ,patients.birthplace
-  ,patients.city
+  patients.id,
+  patients.birthplace,
+  patients.city
 FROM alasql.patients
 WHERE patients.birthplace LIKE "%Massachusetts%"
 ORDER BY city;
@@ -396,9 +389,9 @@ The below table utilizes each of these aggregate functions to analyze the last n
 
 ```sql
 SELECT
-    COUNT(patients.last) AS lon_count
-    ,MIN(patients.last) AS min_lon
-    ,MAX(patients.last) AS max_lon
+    COUNT(patients.last) AS lon_count,
+    MIN(patients.last) AS min_lon,
+    MAX(patients.last) AS max_lon
 FROM alasql.patients
 ```
 @AlaSQL.eval("#dataTable8a")
@@ -424,10 +417,10 @@ The code block below shows an example of using the `GROUP BY` clause to summariz
 
 ```sql
 SELECT
-    patients.sex
-    ,COUNT(*) AS pat_count
-    ,MIN(birthdate) AS earliest_birthdate
-    ,MAX(birthdate) AS latest_birthdate
+    patients.sex,
+    COUNT(*) AS pat_count,
+    MIN(birthdate) AS earliest_birthdate,
+    MAX(birthdate) AS latest_birthdate
 FROM alasql.patients
 GROUP BY
     patients.sex
@@ -446,11 +439,11 @@ GROUP BY
 
 ```sql
 SELECT
-    patients.sex
-    ,patients.race
-    ,COUNT(*) AS pat_count
-    ,MIN(birthdate) AS earliest_birthdate
-    ,MAX(birthdate) AS latest_birthdate
+    patients.sex,
+    patients.race,
+    COUNT(*) AS pat_count,
+    MIN(birthdate) AS earliest_birthdate,
+    MAX(birthdate) AS latest_birthdate
 FROM alasql.patients
 GROUP BY
     patients.sex
@@ -478,10 +471,10 @@ Try commenting out (use `--` at the start of the line) the `ORDER BY` clause to 
 
 ```sql
 SELECT
-    patients.race
-    ,COUNT(*) AS pat_count
-    ,MIN(birthdate) AS earliest_birthdate
-    ,MAX(birthdate) AS latest_birthdate
+    patients.race,
+    COUNT(*) AS pat_count,
+    MIN(birthdate) AS earliest_birthdate,
+    MAX(birthdate) AS latest_birthdate
 FROM alasql.patients
 GROUP BY
     patients.race
@@ -513,8 +506,8 @@ Try running the query below, which checks to see if there are any repeated patie
 
 ```sql
 SELECT
-    patients.id
-    ,COUNT(*) AS pat_count
+    patients.id,
+    COUNT(*) AS pat_count
 FROM alasql.patients
 GROUP BY
     patients.id
@@ -564,8 +557,8 @@ This is the query we used to get the answer:
 
 ```sql
 SELECT
-    patients.city
-    ,COUNT(*) AS patient_population
+    patients.city,
+    COUNT(*) AS patient_population
 FROM alasql.patients
 GROUP BY
     patients.city
@@ -609,9 +602,9 @@ Then we could use that as a sub query, and do our `birthplace` query just on tha
 
 ```sql
 SELECT
-  latina_pop.id  -- referencing the name we will give to the sub query
-  ,latina_pop.race
-  ,CASE
+  latina_pop.id,  -- referencing the name we will give to the sub query
+  latina_pop.race,
+  CASE
      WHEN LOWER(latina_pop.birthplace) LIKE '%massachusetts%' THEN 'Born in MA'
      WHEN latina_pop.birthplace IS NULL THEN 'Birthplace Unknown'
      ELSE 'Not born in MA'
@@ -643,9 +636,9 @@ WHERE
   ethnicity = 'hispanic')
 
 SELECT
-  latina_pop.id
-  ,latina_pop.race
-  ,CASE
+  latina_pop.id,
+  latina_pop.race,
+  CASE
      WHEN LOWER(latina_pop.birthplace) LIKE '%massachusetts%' THEN 'Born in MA'
      WHEN latina_pop.birthplace IS NULL THEN 'Birthplace Unknown'
      ELSE 'Not born in MA'
@@ -671,10 +664,10 @@ There are three problems with the SQL code below.  Correct all three and run the
 ```sql
 WITH generations (
 SELECT
-  patients.id
-  ,patients.sex
-  ,patients.race
-  ,CASE
+  patients.id,
+  patients.sex,
+  patients.race,
+  CASE
     WHEN patients.birthdate LIKE "194%" THEN "boomer"
     WHEN patients.birthdate LIKE "195%" THEN "boomer"
     WHEN patients.birthdate LIKE "198%" THEN "millenial"
@@ -711,10 +704,10 @@ This is the query we used to get the answer:
 ```sql
 WITH generations AS (
 SELECT
-  patients.id
-  ,patients.sex
-  ,patients.race
-  ,CASE
+  patients.id,
+  patients.sex,
+  patients.race,
+  CASE
     WHEN patients.birthdate LIKE "194%" THEN "boomer"
     WHEN patients.birthdate LIKE "195%" THEN "boomer"
     WHEN patients.birthdate LIKE "198%" THEN "millenial"
@@ -734,6 +727,137 @@ FROM generations;
 
 **************
 
+## UNION and Set Operations
+
+**UNION** allows you to combine the results of two or more SELECT queries into a single result set. This is useful when you want to merge data from different tables or different parts of the same table.
+
+### Basic UNION Syntax
+
+```sql
+SELECT column1, column2 FROM table1
+UNION
+SELECT column1, column2 FROM table2;
+```
+
+For UNION to work, the queries must have:
+- The same number of columns
+- Compatible data types in corresponding columns
+
+### UNION vs UNION ALL
+
+**UNION** removes duplicate rows:
+
+```sql
+SELECT sex FROM alasql.patients WHERE birthdate < '1982-01-01'
+UNION
+SELECT sex FROM alasql.patients WHERE birthdate >= '2005-01-01';
+```
+@AlaSQL.eval("#dataTable15a")
+
+<table id="dataTable15a" border="1"></table><br>
+
+**UNION ALL** keeps all rows, including duplicates:
+
+```sql
+SELECT sex FROM alasql.patients WHERE birthdate < '1982-01-01'
+UNION ALL
+SELECT sex FROM alasql.patients WHERE birthdate >= '2005-01-01';
+```
+@AlaSQL.eval("#dataTable15b")
+
+<table id="dataTable15b" border="1"></table><br>
+
+<div style = "display:none;">
+@AlaSQL.buildTable_patients
+</div>
+
+
+### Combining Different Data Sources
+
+You can combine data from different tables that have similar structures:
+
+```sql
+SELECT 
+  patients.last, 
+  birthdate, 
+  deathdate,
+  'Active' AS status
+FROM alasql.patients
+WHERE deathdate is null
+UNION ALL
+SELECT 
+  patients.last, 
+  birthdate, 
+  deathdate, 
+  'Deceased' AS status
+FROM alasql.patients
+WHERE deathdate is not null
+ORDER BY patients.last, status;
+```
+@AlaSQL.eval("#dataTable15c")
+
+<table id="dataTable15c" border="1"></table><br>
+
+<div style = "display:none;">
+@AlaSQL.buildTable_patients
+</div>
+
+This query combines active and deceased patients into one list, adding a `status` column to indicate their status. 
+
+
+### Column Alignment
+
+When using UNION, column names come from the first query:
+
+```sql
+SELECT id, sex AS gender FROM patients WHERE sex = 'F'
+UNION ALL
+SELECT id, sex FROM patients WHERE sex = 'M'; 
+```
+@AlaSQL.eval("#dataTable15d")
+
+<table id="dataTable15d" border="1"></table><br>
+
+<div style = "display:none;">
+@AlaSQL.buildTable_patients
+</div>
+
+The result will have columns named `id` and `gender`, even though the second query uses `sex`.
+
+### Common Use Cases
+
+1. **Combining historical and current data**
+2. **Creating reports with subtotals and totals**
+3. **Merging similar tables from different sources**
+4. **Creating categorical views of data**
+5. **Combining different date ranges**
+
+### Quiz: UNION Operations
+
+1. What's the difference between UNION and UNION ALL?
+
+   [( )] UNION is faster than UNION ALL
+   [(X)] UNION removes duplicates, UNION ALL keeps all rows
+   [( )] UNION ALL removes duplicates, UNION keeps all rows  
+   [( )] There is no difference
+   ***
+   <div class = "answer">
+   UNION removes duplicate rows from the combined result set, while UNION ALL keeps all rows including duplicates. UNION ALL is typically faster because it doesn't need to check for and remove duplicates.
+   </div>
+   ***
+
+2. For UNION to work, what must be true about the SELECT statements?
+
+   [( )] They must use the same table names
+   [(X)] They must have the same number of columns with compatible data types
+   [( )] They must have identical WHERE clauses
+   [( )] They must be sorted in the same order
+   ***
+   <div class = "answer">
+   For UNION to work, each SELECT statement must return the same number of columns, and the corresponding columns must have compatible data types. The table names, WHERE clauses, and sorting don't need to match.
+   </div>
+   ***
+
 
 
 ## Additional Resources
@@ -749,3 +873,6 @@ FROM generations;
 * Prefer a game?  The fun and engaging [SQL Murder Mystery](https://mystery.knightlab.com/) or [Lost at SQL](https://lost-at-sql.therobinlord.com/) might help you hone your skills.
 
 
+## Recap
+
+@recap

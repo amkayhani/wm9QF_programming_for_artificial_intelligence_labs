@@ -59,6 +59,7 @@ Previous Versions:
 
 @end
 
+link:  ../assets/styles.css
 import: ../module_templates/macros.md
 import: ../module_templates/macros_sql.md
 
@@ -84,13 +85,13 @@ import: ../module_templates/macros_sql.md
 
 -->
 
-# Attribution
-
-@attribution
-
 # SQL Joins
 
 @overview
+
+## Attribution
+
+@attribution
 
 ## Overview of Joins
 
@@ -185,9 +186,9 @@ You'll combine join type and join criteria by using both the `FROM` component an
 
 ```sql
 SELECT 
-  table_1.*    -- all the fields from table_1
-  ,table_2.icd9     -- and a couple of fields 
-  ,table_2.dx_date  -- we want from table_2 
+  table_1.*,    -- all the fields from table_1
+  table_2.icd9,     -- and a couple of fields 
+  table_2.dx_date  -- we want from table_2 
 FROM table_1 LEFT JOIN table_2
 ON table_1.pat_id = table_2.pat_id;
 ```
@@ -1148,5 +1149,7 @@ When there's no matching data from the one of the tables to join to the data you
 * Prefer a game?  The fun and engaging [SQL Murder Mystery](https://mystery.knightlab.com/) or [Lost at SQL](https://lost-at-sql.therobinlord.com/) might help you hone your skills.
 
 
+## Recap
 
+@recap
 
