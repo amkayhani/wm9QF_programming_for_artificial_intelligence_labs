@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="180" viewBox="0 0 520 180" role="img" aria-label="queue.Queue final state after get(): two items remain [2, 3]; size 2; dequeued 1">
+  <style>
+    .box { fill: #fde9ea; stroke: #c0392b; stroke-width: 2; }
+    .label { font: 14px Arial, sans-serif; fill: #2b0c0c; }
+    .title { font: bold 16px Arial, sans-serif; fill: #2b0c0c; }
+    .note  { font: italic 13px Arial, sans-serif; fill: #444; }
+  </style>
+  <text x="16" y="24" class="title">queue.Queue - final after get()</text>
+  <rect x="140" y="60" width="80" height="40" class="box"/>
+  <rect x="240" y="60" width="80" height="40" class="box"/>
+  <text x="180" y="85" class="label" text-anchor="middle">2</text>
+  <text x="280" y="85" class="label" text-anchor="middle">3</text>
+  <text x="140" y="120" class="label">Front</text>
+  <text x="240" y="120" class="label">Rear</text>
+  <text x="360" y="85" class="note">dequeued = 1</text>
+  <text x="360" y="105" class="label">size: 2</text>
+</svg>

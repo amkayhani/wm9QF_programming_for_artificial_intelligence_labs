@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="160" viewBox="0 0 480 160" role="img" aria-label="SimpleQueue final state: [20] remains; peek was 10; dequeued 10">
+  <style>
+    .box { fill: #eef5ff; stroke: #1f77b4; stroke-width: 2; }
+    .label { font: 14px Arial, sans-serif; fill: #0b1f30; }
+    .title { font: bold 16px Arial, sans-serif; fill: #0b1f30; }
+    .note  { font: italic 13px Arial, sans-serif; fill: #444; }
+  </style>
+  <text x="16" y="24" class="title">SimpleQueue - final after peek &amp; dequeue</text>
+  <rect x="180" y="60" width="80" height="40" class="box"/>
+  <text x="220" y="85" class="label" text-anchor="middle">20</text>
+  <text x="185" y="120" class="label">Front</text>
+  <text x="225" y="120" class="label">/ Rear</text>
+  <text x="310" y="85" class="note">peek = 10, dequeued = 10</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200" role="img" aria-label="Queue using Python list final state after dequeue: [2, 3]; front at 2, rear at 3; removed = 1">
+  <style>
+    .box { fill: #f5faff; stroke: #1f77b4; stroke-width: 2; }
+    .label { font: 14px Arial, sans-serif; fill: #0b1f30; }
+    .title { font: bold 16px Arial, sans-serif; fill: #0b1f30; }
+    .note  { font: italic 13px Arial, sans-serif; fill: #444; }
+  </style>
+  <text x="20" y="28" class="title">Queue (list) - final after dequeue</text>
+  <rect x="160" y="70" width="100" height="60" class="box"/>
+  <rect x="280" y="70" width="100" height="60" class="box"/>
+  <text x="210" y="105" class="label">2</text>
+  <text x="330" y="105" class="label">3</text>
+  <text x="185" y="150" class="label">front</text>
+  <text x="315" y="150" class="label">rear</text>
+  <text x="420" y="100" class="note">removed = 1</text>
+</svg>

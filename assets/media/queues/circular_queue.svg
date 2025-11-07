@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200">
+  <rect x="50" y="50" width="300" height="100" fill="none" stroke="black" stroke-width="2" />
+  <text x="200" y="40" font-family="Arial" font-size="14" text-anchor="middle">Circular Queue</text>
+
+  <!-- Queue elements -->
+  <rect x="60" y="70" width="50" height="60" fill="#d9f2d9" stroke="black" stroke-width="1" />
+  <text x="85" y="100" font-family="Arial" font-size="12" text-anchor="middle">10</text>
+
+  <rect x="120" y="70" width="50" height="60" fill="#d9f2d9" stroke="black" stroke-width="1" />
+  <text x="145" y="100" font-family="Arial" font-size="12" text-anchor="middle">20</text>
+
+  <rect x="180" y="70" width="50" height="60" fill="#d9f2d9" stroke="black" stroke-width="1" />
+  <text x="205" y="100" font-family="Arial" font-size="12" text-anchor="middle">30</text>
+
+  <rect x="240" y="70" width="50" height="60" fill="#f2d9d9" stroke="black" stroke-width="1" />
+  <text x="265" y="100" font-family="Arial" font-size="12" text-anchor="middle">Empty</text>
+
+  <rect x="300" y="70" width="50" height="60" fill="#f2d9d9" stroke="black" stroke-width="1" />
+  <text x="325" y="100" font-family="Arial" font-size="12" text-anchor="middle">Empty</text>
+
+  <!-- Front and Rear pointers -->
+  <text x="85" y="140" font-family="Arial" font-size="12" text-anchor="middle">Front</text>
+  <text x="205" y="140" font-family="Arial" font-size="12" text-anchor="middle">Rear</text>
+
+  <line x1="85" y1="130" x2="85" y2="120" stroke="black" stroke-width="1" marker-end="url(#arrowhead)" />
+  <line x1="205" y1="130" x2="205" y2="120" stroke="black" stroke-width="1" marker-end="url(#arrowhead)" />
+
+  <!-- Arrowhead marker -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="black" />
+    </marker>
+  </defs>
+</svg>

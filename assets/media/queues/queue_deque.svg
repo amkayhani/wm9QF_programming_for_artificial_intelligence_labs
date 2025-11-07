@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="160" viewBox="0 0 480 160" role="img" aria-label="collections.deque final state after popleft: [2, 3]; front at 2, rear at 3; removed = 1">
+  <style>
+    .box { fill: #e9fbea; stroke: #2ca02c; stroke-width: 2; }
+    .label { font: 14px Arial, sans-serif; fill: #103014; }
+    .title { font: bold 16px Arial, sans-serif; fill: #103014; }
+    .note  { font: italic 13px Arial, sans-serif; fill: #444; }
+  </style>
+  <text x="16" y="24" class="title">deque - final after popleft()</text>
+  <rect x="120" y="50" width="80" height="40" class="box"/>
+  <rect x="220" y="50" width="80" height="40" class="box"/>
+  <text x="160" y="75" class="label" text-anchor="middle">2</text>
+  <text x="260" y="75" class="label" text-anchor="middle">3</text>
+  <text x="120" y="120" class="label">Front</text>
+  <text x="220" y="120" class="label">Rear</text>
+  <text x="340" y="90" class="note">removed = 1</text>
+</svg>
