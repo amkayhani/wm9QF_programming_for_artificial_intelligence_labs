@@ -81,15 +81,13 @@ import: https://dscroft.github.io/Pyodide/README.md
 import: https://github.com/LiaScript/CodeRunner/blob/master/README.md
 -->
 
-
-# Attribution
-
-@algo_attribution
-
 # Searching Algorithms
 
 @overview
 
+## Attribution
+
+@algo_attribution
 
 ## Introduction
 
@@ -704,6 +702,7 @@ Let's summarize what we've learned about searching algorithms:
 | **Best Case** | O(1) - first element | O(1) - middle element |
 | **Worst Case** | O(n) - last/not found | O(log n) - not found |
 
+
 ### When to Use Each Algorithm
 
 **Choose Linear Search when:**
@@ -721,6 +720,7 @@ Let's summarize what we've learned about searching algorithms:
 - You'll be searching frequently
 - Fast lookup time is critical
 - You can afford the sorting overhead
+
 
 ### Key Takeaways
 
@@ -803,3 +803,7 @@ Congratulations! You now understand the fundamentals of searching algorithms and
   - Find the last occurrence of an element in a sorted array.
   - Search in a rotated sorted array.
   - Implement a binary search that works with floating-point numbers.
+
+## Recap
+
+@recap

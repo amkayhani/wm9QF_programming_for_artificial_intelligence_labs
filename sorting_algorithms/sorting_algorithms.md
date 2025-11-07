@@ -238,6 +238,9 @@ print("Sorted list:", sorted_list)
 
 Selection sort performs fewer swaps than bubble sort, which can be advantageous when the cost of swapping is high.
 
+However unlike bubble sort it lacks the optimization of detecting and stopping early if the list is already sorted or if the list is nearly sorted.
+
+
 ## Merge Sort
 
 **Merge Sort** is a divide-and-conquer algorithm that divides the array into two halves, sorts them separately, and then merges them back together. This is much more efficient than bubble sort and selection sort for large datasets.
@@ -624,3 +627,6 @@ Understanding these algorithms helps you make informed decisions about when to u
 
 * **Practice Problems**: Try implementing sorting algorithms on coding practice websites like [LeetCode](https://leetcode.com/) or [HackerRank](https://www.hackerrank.com/) to reinforce your understanding.
 
+## Recap
+
+@recap

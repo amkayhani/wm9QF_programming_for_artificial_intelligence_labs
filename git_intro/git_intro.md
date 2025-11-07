@@ -153,6 +153,14 @@ While git by itself is great at version control and keeping track of your change
 
 If you're new to coding, feel overwhelmed by the idea of working on the command line, or just prefer a more visual interface, GitHub can be very helpful.
 
+<div class = "cool-fact">
+<b style="color: rgb(var(--color-highlight));">Free!</b><br>
+
+While you are in education Github will give you a free [Pro account](https://github.com/education/students) that includes unlimited private repositories and extra features. 
+This is normally a paid service but you are signing up with a 3rd party (GitHub), so please read their terms of service and privacy policy carefully before signing up.
+
+</div>
+
 <div class = "history">
 <b style="color: rgb(var(--color-highlight));">Historical context</b><br>
 
@@ -160,12 +168,30 @@ Interestingly, despite the name, GitHub is independent from git, and is simply a
 
 </div>
 
+
 Other Software
 ----
 
 There are other big players in the market that use git (for example, git repository software like [Sourcetree](https://www.sourcetreeapp.com/), or [the Git functionality in RStudio](https://happygitwithr.com/index.html)), but GitHub is the most commonly used platform that people use with the git protocol.
 
 That is not to say that GitHub is the only option. Other popular git repository hosting services include [GitLab](https://about.gitlab.com/) and [Bitbucket](https://bitbucket.org/product). All of these services have similar functionality, but differ in their pricing models, user interfaces, and some features.
+
+### Remote repositories
+
+Using a service like GitHub, GitLab, or Bitbucket means that your git repository is hosted on a remote server. This has several advantages:
+
+<!-- style="max-width: 300px; margin: auto;" -->
+![In case of fire, git commit, git push, git out](media/git_sticker_large.jpg)
+
+1. **Collaboration**: Multiple people can work on the same project simultaneously without interfering with each other's changes. Each person can have their own copy of the repository, make changes, and then merge those changes back into the main project.
+
+2. **Backup**: Your code is stored on a remote server, which means it's backed up and can be recovered if your local machine fails.
+
+3. **Access**: You can access your code from anywhere with an internet connection, making it easier to work from different locations or devices.
+
+4. **Integration**: Many remote repository services offer additional features like issue tracking, project management tools, and continuous integration/continuous deployment (CI/CD) pipelines.
+
+
 
 
 ## Filetypes
@@ -188,7 +214,7 @@ This is in contrast to plain text files, where the file is simply a sequence of 
 <b style="color: rgb(var(--color-highlight));">Important note</b><br>
 
 *This* lab material was written in [LiaScript](https://liascript.github.io/), which is a plain text format and was version controlled using git with the repository hosted on Github. 
-Because of this, we can easily see the changes that were made to this file over time and who made them, including the when this section was added to the file.
+Because of this, we can easily [see the changes](https://github.com/dscroft/wm9QF_programming_for_artificial_intelligence_labs/commit/99900805467cfb84ca69b7b4e174ad682bcd894c) that were made to this file over time and who made them. Including when this section was added to the file.
 
 </div>
 
@@ -259,9 +285,6 @@ Many thanks to Carpentries for developing and sharing this material!
 
 There is an article written for scientists about how and why to get started with version control: Blischak JD, Davenport ER, Wilson G. [A Quick Introduction to Version Control with Git and GitHub](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4718703/). PLoS Comput Biol. 2016;12(1):e1004668. Published 2016 Jan 19.
 
-There is an excellent book available for free online, [Happy Git with R](https://happygitwithr.com/big-picture.html), targeting R users who want to get started with version control. The opening chapter provides relevant background on version control regardless of whether you have any R experience.
-
-For discussion of how version control can improve your scientific writing process, see our article [Version Control for Writing](https://education.arcus.chop.edu/version-control-writing/).
 
 ## Recap
 
