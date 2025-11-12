@@ -1,7 +1,7 @@
 <!--
 module_id: exception_handling_and_files
-author: Meredith Lee
-email: leemc@chop.edu
+author: Amir Kayhani
+email: amir.kayhani@warwick.ac.uk
 version: 1.0.0
 current_version_description: Initial version introducing exception handling and file operations in Python.
 module_type: standard
