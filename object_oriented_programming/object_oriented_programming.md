@@ -772,7 +772,7 @@ print(f"\nTotal Employees: {Employee.employee_count}")
 
 ---
 
-### Example: Animal Kingdom Hierarchy
+### Example: Wildlife Species Hierarchy
 
 This example demonstrates inheritance with multiple derived classes and polymorphic behavior.
 
@@ -863,7 +863,7 @@ penguin = Bird("Pingu", "Penguin", 4, False)
 animals = [dog, cat, parrot, penguin]
 
 print("="*50)
-print("ANIMAL KINGDOM DEMONSTRATION")
+print("WILDLIFE SPECIES DEMONSTRATION")
 print("="*50)
 
 for animal in animals:
@@ -901,7 +901,7 @@ for animal in animals:
 5. **Type Checking**: Using `isinstance()` to check object types
 
 **Quiz:**
-In the Animal Kingdom example, what is the inheritance chain for the `Dog` class?
+In the Wildlife Species example, what is the inheritance chain for the `Dog` class?
 
 [( )] Animal → Dog  
 [( )] Animal → Bird → Dog  
