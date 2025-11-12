@@ -24,9 +24,10 @@ Learners should be familiar with [Python as a programming language](https://lias
 
 @learning_objectives
 
-- Assign values to variables
-- Identify and use functions 
-- Identify and use methods
+- Assign values to variables.
+- Understand the default data types in Python.
+- Identify and use functions.
+- Identify and use methods.
 
 @end
 
@@ -376,3 +377,6 @@ The `+` operator, when used with strings, concatenates (or joins) the two string
 
 * Jupyter notebooks are a great option for doing data analysis with Python-- [check out this Jupyter notebook demo](https://jupyter.org/try-jupyter/lab/), then open "notebooks" and look at "Intro.ipynb" to see how they work.
 
+## Recap
+
+@recap

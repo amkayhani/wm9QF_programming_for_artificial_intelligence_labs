@@ -247,7 +247,8 @@ sagecell.makeSagecell({inputLocation: 'div.r_run',
 
 script: https://sagecell.sagemath.org/static/embedded_sagecell.js
 
-import: https://raw.githubusercontent.com/arcus/education_modules/main/_module_templates/macros.md
+link:  ../assets/styles.css
+import: ../module_templates/macros.md
 -->
 
 # Python Module Macros
