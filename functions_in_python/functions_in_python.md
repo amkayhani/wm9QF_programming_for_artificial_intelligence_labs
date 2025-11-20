@@ -53,7 +53,7 @@ import: https://github.com/LiaScript/CodeRunner/blob/master/README.md
 
 In this module, you will learn how to define and use functions in Python. Functions are essential for structuring code, improving reusability, and simplifying complex programs. By the end of this module, you will be able to confidently create and use functions in your Python programs.
 
-## Defining and Calling Functions
+## Defining and Calling Functions in Python
 
 ### What is a Function?
 
