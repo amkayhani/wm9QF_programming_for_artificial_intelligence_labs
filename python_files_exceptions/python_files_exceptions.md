@@ -1,7 +1,7 @@
 <!--
 module_id: python_files_exceptions
-author: Meredith Lee
-email: leemc@chop.edu
+author: 
+email: 
 version: 1.0.0
 current_version_description: Initial version introducing file handling and exception handling in Python.
 module_type: standard
@@ -18,9 +18,6 @@ long_description: This module introduces learners to file handling and exception
 
 estimated_time_in_minutes: 25
 
-@pre_reqs
-Learners should be familiar with [basic Python syntax](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/python_basics_variables_functions_methods/python_basics_variables_functions_methods.md#1) and [loops and conditionals](https://liascript.github.io/course/?https://raw.githubusercontent.com/arcus/education_modules/main/python_basics_loops_conditionals/python_basics_loops_conditionals.md#1).
-@end
 
 @learning_objectives
 
@@ -67,7 +64,11 @@ import: https://github.com/LiaScript/CodeRunner/blob/master/README.md
 
 # Python Basics: File Handling and Exception Handling
 
+
+
 @overview
+
+In this module, you will learn how to work with files in Python, including reading, writing, and appending data. Additionally, you will explore how to handle exceptions to make your programs more robust and error-resistant. By the end of this module, you will be able to confidently manage file operations and handle common errors that may arise during execution.
 
 ## Attribution
 

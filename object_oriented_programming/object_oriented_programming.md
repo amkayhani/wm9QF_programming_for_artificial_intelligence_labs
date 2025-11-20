@@ -73,9 +73,6 @@ import: https://github.com/LiaScript/CodeRunner/blob/master/README.md
 
 In this module, you will learn the fundamentals of object-oriented programming (OOP) in Python. OOP is a programming paradigm that organizes code into reusable "blueprints" called classes. By the end of this module, you will be able to design and implement Python programs using OOP principles.
 
-## Attribution
-
-@attribution
 
 ## Lesson Preparation
 
