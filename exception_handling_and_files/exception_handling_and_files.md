@@ -70,7 +70,7 @@ import: https://github.com/LiaScript/CodeRunner/blob/master/README.md
 @overview
 
 In this module, you will learn how to handle exceptions and work with files in Python. Exception handling ensures your programs can gracefully handle errors, while file operations allow you to read, write, and manage external data. By the end of this module, you will be able to confidently manage file operations and handle common errors that may arise during execution.
-
+ 
 
 ## Lesson Preparation
 
