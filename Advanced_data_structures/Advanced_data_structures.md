@@ -82,12 +82,6 @@ By the end of the module, you will be able to implement each structure in Python
 
 ---
 
-## Attribution
-
-@algo_attribution
-
----
-
 ## Lesson Preparation
 
 @lesson_prep_python_pyodide
