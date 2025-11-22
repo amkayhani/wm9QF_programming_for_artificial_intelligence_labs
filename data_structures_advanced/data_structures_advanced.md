@@ -185,11 +185,41 @@ A circular queue is a linear data structure that connects the last position back
 - **Efficient Memory Usage**: Unlike a simple queue, a circular queue reuses empty spaces created by dequeuing elements. This ensures that no memory is wasted, especially in scenarios where the queue is frequently updated.
 - **Fixed Size**: Circular queues are often implemented with a fixed size, making them suitable for hardware-level applications where memory constraints are critical. For example, embedded systems often use circular queues to manage tasks efficiently.
 
+**Question:**
+Which of the following scenarios best demonstrates the advantage of a circular queue's efficient memory usage?
+
+@Pyodide.eval
+
+[( )] A queue where elements are added and removed in a strictly sequential order.
+[(X)] A queue where elements are frequently dequeued and enqueued, creating empty spaces.
+[( )] A queue that dynamically resizes itself when full.
+[( )] A queue used in a stack-based memory allocation system.
+***
+<div class="answer">
+Circular queues reuse empty spaces created by dequeuing elements, making them ideal for scenarios with frequent enqueue and dequeue operations.
+</div>
+***
+
 #### Operations:
 - **Enqueue**: Add an element to the rear of the queue. If the queue is full, the operation cannot proceed, and an overflow condition is raised.
 - **Dequeue**: Remove an element from the front of the queue. If the queue is empty, the operation cannot proceed, and an underflow condition is raised.
 - **isFull**: Check if the queue is full. This operation is crucial for ensuring that no additional elements are added beyond the queue's capacity.
 - **isEmpty**: Check if the queue is empty. This operation helps in determining whether there are any elements to process.
+
+**Question:**
+What is the time complexity of the `enqueue` operation in a circular queue implemented using an array?
+
+@Pyodide.eval
+
+[( )] O(n)
+[( )] O(log n)
+[(X)] O(1)
+[( )] O(n^2)
+***
+<div class="answer">
+The `enqueue` operation in a circular queue has a time complexity of O(1) because it involves a simple arithmetic operation to update the rear pointer and insert the element.
+</div>
+***
 
 #### Python Implementation:
 ```python
@@ -243,11 +273,20 @@ cq.display()
 ```
 @Pyodide.eval
 
-![Circular Queue Diagram](../assets/media/queues/circular_queue.svg)
+**Question:**
+In the given Python implementation of a circular queue, what will happen if the `dequeue` method is called on an empty queue?
 
-![Circular Queue Illustration](https://angelvyas.com/posts/data_structures/images/cirq.jpg)
+@Pyodide.eval
 
-*Image Source: [Angel Vyas - Circular Queue](https://angelvyas.com/posts/data_structures/circularq/)*
+[( )] It will return `None`.
+[( )] It will remove the last element in the queue.
+[(X)] It will raise an `IndexError`.
+[( )] It will reset the `front` and `rear` pointers to -1.
+***
+<div class="answer">
+Calling `dequeue` on an empty queue raises an `IndexError` because the `front` pointer is set to -1, indicating that the queue is empty.
+</div>
+***
 
 #### Applications of Circular Queues:
 - **Task Scheduling**: Circular queues are used in round-robin scheduling algorithms. These algorithms allocate a fixed time slice to each task, ensuring fairness and efficient CPU utilization.
@@ -255,177 +294,47 @@ cq.display()
 - **Traffic Management**: Circular queues help in managing traffic signals efficiently. By cycling through signals in a fixed order, circular queues ensure smooth traffic flow and reduce congestion.
 - **Data Mining and AI**: Circular queues are used in sliding window algorithms, which are essential for processing streaming data. For example, in real-time anomaly detection or predictive modeling, a circular queue can maintain a fixed-size window of the most recent data points for analysis. Another example is in natural language processing (NLP), where circular queues can be used to manage a rolling context window for tasks like sentiment analysis or text summarization.
 
-### 3.3 Priority Queue
-Processes elements based on priority rather than order.
+**Question:**
+A video streaming service uses a circular queue to buffer data packets. If the buffer size is 10 packets and the service receives 15 packets, what happens to the first 5 packets?
 
-```python
-import heapq
-
-class PriorityQueue:
-    def __init__(self):
-        self._heap = []
-
-    def push(self, priority, item):
-        heapq.heappush(self._heap, (priority, item))
-
-    def pop(self):
-        if not self._heap:
-            raise IndexError("pop from empty priority queue")
-        return heapq.heappop(self._heap)
-
-# Demo
-pq = PriorityQueue()
-pq.push(2, "Task 2")
-pq.push(1, "Task 1")
-print("Popped element:", pq.pop())
-```
 @Pyodide.eval
 
-![Visualization of Priority Queue Operations](../assets/media/queues/priority_queue.svg)
+[( )] They are processed immediately.
+[( )] They are stored in a secondary buffer.
+[(X)] They are overwritten by the new packets.
+[( )] They are sent back to the sender.
+***
+<div class="answer">
+In a circular queue, when the buffer is full, new data overwrites the oldest data. Thus, the first 5 packets are overwritten by the new packets.
+</div>
+***
 
----
+**Question:**
+In a traffic management system, a circular queue is used to manage traffic signals. If there are 4 signals (A, B, C, D) and the queue starts at A, what will be the order of signals after 3 cycles?
 
-## 4. Applications of Queues
-
-### Task Scheduling
-Queues manage tasks in operating systems, ensuring fair processing.
-
-### Breadth-First Search (BFS)
-```python
-from collections import deque
-
-def bfs(graph, start):
-    visited = set()
-    queue = deque([start])
-
-    while queue:
-        node = queue.popleft()
-        if node not in visited:
-            print(node, end=" ")
-            visited.add(node)
-            queue.extend(graph[node])
-
-graph = {
-    'A': ['B', 'C'],
-    'B': ['D', 'E'],
-    'C': ['F'],
-    'D': [],
-    'E': ['F'],
-    'F': []
-}
-
-bfs(graph, 'A')
-```
 @Pyodide.eval
 
-![Visualization of BFS Using a Queue](../assets/media/queues/bfs_queue_final.svg)
+[( )] A, B, C, D, A, B, C, D, A, B, C, D
+[(X)] A, B, C, D, A, B, C, D, A, B, C, D
+[( )] D, C, B, A, D, C, B, A, D, C, B, A
+[( )] A, D, C, B, A, D, C, B, A, D, C, B
+***
+<div class="answer">
+In a circular queue, the order of elements remains consistent as the queue cycles through. After 3 cycles, the order of signals will still be A, B, C, D repeated three times.
+</div>
+***
 
----
+**Question:**
+A machine learning model uses a sliding window algorithm with a circular queue to process streaming data. If the window size is 5 and the queue currently holds [10, 20, 30, 40, 50], what happens when a new data point (60) is added?
 
-## 5. Exercises
-
-### Exercise 1: Basic Queue Operations
-Implement a queue using `collections.deque` and perform the following operations:
-1. Enqueue elements 10, 20, 30.
-2. Dequeue an element.
-3. Check the front element.
-4. Check if the queue is empty.
-
-```python
-
-```
 @Pyodide.eval
 
-### Exercise 2: Circular Queue
-Implement a circular queue with a fixed size of 5. Perform enqueue and dequeue operations and handle overflow and underflow conditions.
-```python
-
-```
-@Pyodide.eval
-
-### Exercise 3: Priority Queue
-Use `queue.PriorityQueue` to implement a task scheduler where tasks with higher priority are executed first.
-
-```python
-
-```
-@Pyodide.eval
-
----
-
-# Tree Algorithms
-
-@sectiontoc
-
-
-## Binary Search Tree
-
-@algo_vis(LiaBST)
-
-
-
-## AVL Trees (Balanced binary search trees)
-
-@algo_vis(LiaAVLtree)
-
-
-## Red-Black Trees
-
-@algo_vis(LiaRedBlack)
-
-
-## Splay Trees
-
-@algo_vis(LiaSplayTree)
-
-
-# Graph Algorithms
-
-@sectiontoc
-
-
-## Breadth-First Search
-
-@algo_vis(LiaBFS)
-
-
-## Depth-First Search
-
-@algo_vis(LiaDFS)
-
-
-## Connected Components
-
-@algo_vis(LiaConnectedComponent)
-
-
-## Dijkstra's Shortest Path
-
-@algo_vis(LiaDijkstra)
-
-
-## Prim's Minimum Cost Spanning Tree
-
-@algo_vis(LiaPrim)
-
-
-## Topological Sort (Using Indegree array) 
-
-@algo_vis(LiaTopoSortIndegree)
-
-
-## Topological Sort (Using DFS) 
-
-@algo_vis(LiaTopoSortDFS)
-
-
-## Floyd-Warshall (all pairs shortest paths)
-
-@algo_vis(LiaFloyd)
-
-
-## Kruskal Minimum Cost Spanning Tree Algorith
-
-@algo_vis(LiaKruskal)
+[( )] The queue expands to hold 6 elements.
+[( )] The queue discards all elements and starts fresh with [60].
+[(X)] The oldest element (10) is removed, and the queue becomes [20, 30, 40, 50, 60].
+[( )] The queue raises an overflow error.
+***
+<div class="answer">
+In a sliding window algorithm using a circular queue, adding a new element when the queue is full removes the oldest element to maintain the fixed window size. The queue becomes [20, 30, 40, 50, 60].
 
 
