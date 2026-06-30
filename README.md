@@ -11,6 +11,15 @@
 - Python Loops: https://liascript.github.io/course/?https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/python_basics_loops/python_basics_loops.md
 
 
+## Algorithms
+
+Searching: https://liascript.github.io/course/?https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/searching_algorithms/searching_algorithms.md
+
+Sorting: https://liascript.github.io/course/?https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/sorting_algorithms/sorting_algorithms.md
+
+
+Tree traversal: https://liascript.github.io/course/?https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/tree_traversal/tree_traversal.md
+
 ## Git
 
 - Git intro: https://liascript.github.io/course/?https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/git_intro/git_intro.md
@@ -41,4 +50,3 @@
 
 - SQL and Python: https://liascript.github.io/course/?https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/sqlite/sqlite.md
 
-- Unit testing in Python: https://liascript.github.io/course/?https://dscroft.github.io/wm9QF_programming_for_artificial_intelligence_labs/python_unit_testing/python_unit_testing.md
