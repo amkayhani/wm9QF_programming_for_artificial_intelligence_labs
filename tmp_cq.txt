@@ -1,0 +1,44 @@
+﻿### 3.2 Circular Queue
+Efficient for fixed-size buffers. Avoids shifting elements.
+
+```python
+class CircularQueue:
+    def __init__(self, capacity):
+        self._data = [None] * capacity
+        self._head = 0
+        self._tail = 0
+        self._count = 0
+        self._cap = capacity
+
+    def enqueue(self, item):
+        if self.is_full():
+            raise OverflowError("Queue is full")
+        self._data[self._tail] = item
+        self._tail = (self._tail + 1) % self._cap
+        self._count += 1
+
+    def dequeue(self):
+        if self.is_empty():
+            raise IndexError("Queue is empty")
+        item = self._data[self._head]
+        self._data[self._head] = None
+        self._head = (self._head + 1) % self._cap
+        self._count -= 1
+        return item
+
+    def is_empty(self):
+        return self._count == 0
+
+    def is_full(self):
+        return self._count == self._cap
+
+# Demo
+cq = CircularQueue(3)
+cq.enqueue(1)
+cq.enqueue(2)
+print("Dequeued element:", cq.dequeue())
+```
+@Pyodide.eval
+
+![Visualization of Circular Queue Operations](../assets/media/queues/deque.svg)
+

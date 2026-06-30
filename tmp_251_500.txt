@@ -1,0 +1,129 @@
+﻿
+### Task Scheduling
+Queues manage tasks in operating systems, ensuring fair processing.
+
+### Breadth-First Search (BFS)
+```python
+from collections import deque
+
+def bfs(graph, start):
+    visited = set()
+    queue = deque([start])
+
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            print(node, end=" ")
+            visited.add(node)
+            queue.extend(graph[node])
+
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F'],
+    'D': [],
+    'E': ['F'],
+    'F': []
+}
+
+bfs(graph, 'A')
+```
+@Pyodide.eval
+
+![Visualization of BFS Using a Queue](../assets/media/queues/queue_deque.svg)
+
+---
+
+## 5. Exercises
+
+### Exercise 1: Basic Queue Operations
+Implement a queue using `collections.deque` and perform the following operations:
+1. Enqueue elements 10, 20, 30.
+2. Dequeue an element.
+3. Check the front element.
+4. Check if the queue is empty.
+
+### Exercise 2: Circular Queue
+Implement a circular queue with a fixed size of 5. Perform enqueue and dequeue operations and handle overflow and underflow conditions.
+
+### Exercise 3: Priority Queue
+Use `queue.PriorityQueue` to implement a task scheduler where tasks with higher priority are executed first.
+
+---
+
+# Tree Algorithms
+
+@sectiontoc
+
+
+## Binary Search Tree
+
+@algo_vis(LiaBST)
+
+
+
+## AVL Trees (Balanced binary search trees)
+
+@algo_vis(LiaAVLtree)
+
+
+## Red-Black Trees
+
+@algo_vis(LiaRedBlack)
+
+
+## Splay Trees
+
+@algo_vis(LiaSplayTree)
+
+
+# Graph Algorithms
+
+@sectiontoc
+
+
+## Breadth-First Search
+
+@algo_vis(LiaBFS)
+
+
+## Depth-First Search
+
+@algo_vis(LiaDFS)
+
+
+## Connected Components
+
+@algo_vis(LiaConnectedComponent)
+
+
+## Dijkstra's Shortest Path
+
+@algo_vis(LiaDijkstra)
+
+
+## Prim's Minimum Cost Spanning Tree
+
+@algo_vis(LiaPrim)
+
+
+## Topological Sort (Using Indegree array) 
+
+@algo_vis(LiaTopoSortIndegree)
+
+
+## Topological Sort (Using DFS) 
+
+@algo_vis(LiaTopoSortDFS)
+
+
+## Floyd-Warshall (all pairs shortest paths)
+
+@algo_vis(LiaFloyd)
+
+
+## Kruskal Minimum Cost Spanning Tree Algorith
+
+@algo_vis(LiaKruskal)
+
+

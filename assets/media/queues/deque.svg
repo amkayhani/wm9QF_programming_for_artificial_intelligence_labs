@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="200" viewBox="0 0 640 200" role="img" aria-label="Circular queue final (capacity 3): data [4, 2, 3]; front=1 (value 2); rear=0 (value 4); full">
+  <style>
+    .wedge  { fill: #e6f7ea; stroke: #2ca02c; stroke-width: 2; }
+    .label  { font: 14px Arial, sans-serif; fill: #143016; }
+    .title  { font: bold 16px Arial, sans-serif; fill: #143016; }
+    .legend { font: 12px Arial, sans-serif; fill: #143016; }
+  </style>
+  <defs>
+    <marker id="arrow-front" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f6f3f" />
+    </marker>
+    <marker id="arrow-rear" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7a4a00" />
+    </marker>
+  </defs>
+  <text x="20" y="28" class="title">Circular Queue (capacity 3) — final (full)</text>
+
+  <!-- three 120° wedges: index 0, 1, 2 -->
+  <!-- index 0 (-30° → 90°): value 4 -->
+  <path class="wedge" d="M 375.426 68 A 64 64 0 0 1 320 164 L 320 140 A 40 40 0 0 0 354.641 80 Z"/>
+  <!-- index 1 (90° → 210°): value 2 -->
+  <path class="wedge" d="M 320 164 A 64 64 0 0 1 264.574 68 L 285.359 80 A 40 40 0 0 0 320 140 Z"/>
+  <!-- index 2 (210° → 330°): value 3 -->
+  <path class="wedge" d="M 264.574 68 A 64 64 0 0 1 375.426 68 L 354.641 80 A 40 40 0 0 0 285.359 80 Z"/>
+
+  <!-- index:value labels at sector centers -->
+  <text x="355" y="105" class="label" text-anchor="middle">0: 4</text>
+  <text x="275" y="126" class="label" text-anchor="middle">1: 2</text>
+  <text x="320" y="62" class="label" text-anchor="middle">2: 3</text>
+
+  <!-- front pointer to index 1 (value 2) -->
+  <text x="118" y="164" class="legend">front = 1</text>
+  <line x1="200" y1="160" x2="275" y2="126" stroke="#1f6f3f" stroke-width="2" marker-end="url(#arrow-front)"/>
+
+  <!-- rear pointer to index 0 (value 4) -->
+  <text x="455" y="44" class="legend">rear = 0</text>
+  <line x1="448" y1="52" x2="355" y2="105" stroke="#7a4a00" stroke-width="2" marker-end="url(#arrow-rear)"/>
+
+  <!-- state note -->
+  <text x="480" y="120" class="label">state: full</text>
+</svg>
