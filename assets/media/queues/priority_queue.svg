@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="180" viewBox="0 0 520 180" role="img" aria-label="Priority queue final state after pop: Task 2 (priority 2) remains; popped Task 1 (priority 1)">
+  <style>
+    .box { fill: #ffe6ef; stroke: #d81b60; stroke-width: 2; }
+    .label { font: 14px Arial, sans-serif; fill: #3a0b20; }
+    .title { font: bold 16px Arial, sans-serif; fill: #3a0b20; }
+    .note  { font: italic 13px Arial, sans-serif; fill: #444; }
+  </style>
+  <text x="16" y="24" class="title">Priority Queue - final after pop()</text>
+  <rect x="160" y="60" width="200" height="46" class="box"/>
+  <text x="260" y="88" class="label" text-anchor="middle">Task 2 (prio 2)</text>
+  <text x="380" y="120" class="note">popped: Task 1 (prio 1)</text>
+</svg>

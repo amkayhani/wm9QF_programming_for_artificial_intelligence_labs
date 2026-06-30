@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="180" viewBox="0 0 520 180" role="img" aria-label="BFS queue final state: empty after traversal">
+  <style>
+    .outline { fill: none; stroke: #333; stroke-width: 2; stroke-dasharray: 6 4; }
+    .label { font: 14px Arial, sans-serif; fill: #111; }
+    .title { font: bold 16px Arial, sans-serif; fill: #111; }
+  </style>
+  <text x="16" y="24" class="title">BFS - queue final state</text>
+  <rect x="160" y="60" width="200" height="46" class="outline"/>
+  <text x="260" y="88" class="label" text-anchor="middle">empty</text>
+  <text x="370" y="120" class="label">after traversal</text>
+</svg>
